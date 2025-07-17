@@ -1,0 +1,35 @@
+export interface NewsArticle {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  author: string;
+  source: string;
+  publishedAt: string;
+  imageUrl: string;
+  category: string;
+  url: string;
+  readingTime: number;
+}
+
+export interface NewsCategory {
+  id: string;
+  name: string;
+  slug: string;
+  color: string;
+}
+
+export interface NewsFilters {
+  category: string;
+  search: string;
+  sortBy: 'newest' | 'oldest' | 'popular';
+}
+
+export interface NewsState {
+  articles: NewsArticle[];
+  categories: NewsCategory[];
+  loading: boolean;
+  error: string | null;
+  filters: NewsFilters;
+  bookmarks: string[];
+}
