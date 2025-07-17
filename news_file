@@ -1,0 +1,54 @@
+import { useState, useEffect } from 'react';
+import { NewsArticle, NewsCategory, NewsFilters, NewsState } from '../types/news';
+import { mockArticles, mockCategories } from '../data/mockNews';
+
+export const useNews = () => {
+  const [state, setState] = useState<NewsState>({
+    articles: [],
+    categories: mockCategories,
+    loading: true,
+    error: null,
+    filters: {
+      category: 'all',
+      search: '',
+      sortBy: 'newest'
+    },
+    bookmarks: JSON.parse(localStorage.getItem('newsBookmarks') || '[]')
+  });
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('newsTheme');
+    return (saved as 'light' | 'dark') || 'light';
+  });
+
+  useEffect(() => {
+    // Simulate API call
+    const fetchNews = async () => {
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      
+      try {
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        let filteredArticles = [...mockArticles];
+        
+        // Apply category filter
+        if (state.filters.category !== 'all') {
+          filteredArticles = filteredArticles.filter(article => 
+            article.category === state.filters.category
+          );
+        }
+        
+        // Apply search filter
+        if (state.filters.search) {
+          const searchTerm = state.filters.search.toLowerCase();
+          filteredArticles = filteredArticles.filter(article =>
+            article.title.toLowerCase().includes(searchTerm) ||
+            article.description.toLowerCase().includes(searchTerm) ||
+            article.content.toLowerCase().includes(searchTerm)
+          );
+        }
+        
+        // Apply sorting
+        filteredArticles.sort((a, b) => {
+};
