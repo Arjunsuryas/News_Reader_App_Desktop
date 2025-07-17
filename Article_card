@@ -1,0 +1,30 @@
+import React from 'react';
+import { BookmarkPlus, Bookmark as BookmarkCheck, Clock, Share2, ExternalLink } from 'lucide-react';
+import { NewsArticle } from '../types/news';
+import { clsx } from 'clsx';
+
+interface ArticleCardProps {
+  article: NewsArticle;
+  isBookmarked: boolean;
+  onToggleBookmark: (articleId: string) => void;
+}
+
+export const ArticleCard: React.FC<ArticleCardProps> = ({
+  article,
+  isBookmarked,
+  onToggleBookmark
+}) => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+};
