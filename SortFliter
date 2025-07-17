@@ -1,0 +1,30 @@
+import React from 'react';
+import { ChevronDown } from 'lucide-react';
+import { NewsFilters } from '../types/news';
+
+interface SortFilterProps {
+  filters: NewsFilters;
+  onFiltersChange: (filters: Partial<NewsFilters>) => void;
+}
+
+export const SortFilter: React.FC<SortFilterProps> = ({ filters, onFiltersChange }) => {
+  return (
+    <div className="flex items-center space-x-4 mb-6">
+      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Sort by:
+      </span>
+      <div className="relative">
+        <select
+          value={filters.sortBy}
+          onChange={(e) => onFiltersChange({ sortBy: e.target.value as 'newest' | 'oldest' | 'popular' })}
+          className="appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+        >
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="popular">Most popular</option>
+        </select>
+        <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+      </div>
+    </div>
+  );
+};
