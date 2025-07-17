@@ -1,0 +1,75 @@
+import React from 'react';
+import { Search, Menu, Sun, Moon, BookOpen } from 'lucide-react';
+import { NewsFilters } from '../types/news';
+
+interface HeaderProps {
+  filters: NewsFilters;
+  onFiltersChange: (filters: Partial<NewsFilters>) => void;
+  onRefresh: () => void;
+  theme: 'light' | 'dark';
+  onThemeToggle: () => void;
+  onMenuToggle: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  filters,
+  onFiltersChange,
+  onRefresh,
+  theme,
+  onThemeToggle,
+  onMenuToggle
+}) => {
+  return (
+    <header className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo and Menu */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={onMenuToggle}
+              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="flex items-center space-x-2">
+              <BookOpen className="h-8 w-8 text-blue-600" />
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                NewsReader
+              </h1>
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex-1 max-w-lg mx-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search news..."
+                value={filters.search}
+                onChange={(e) => onFiltersChange({ search: e.target.value })}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              />
+            </div>
+          </div>
+
+          {/* Theme Toggle and Refresh */}
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={onThemeToggle}
+              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
+            <button
+              onClick={onRefresh}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
